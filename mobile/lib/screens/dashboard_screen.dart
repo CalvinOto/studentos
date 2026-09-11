@@ -23,7 +23,7 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = Theme.of(context).extension<AppColors>()!;
     final now = DateTime.now();
-    final dow = now.weekday % 7; // Dart: Mon=1..Sun=7 -> convert to Sun=0..Sat=6
+    final dow = now.weekday % 7; 
     final todayIsoStr = todayIso();
     final todayOfMonth = now.day;
 
@@ -37,7 +37,7 @@ class DashboardScreen extends StatelessWidget {
 
     final pending = data.tasks.where((t) => t.status == 'pending').toList();
     final overdue = pending.where((t) => daysUntil(t.dueDate) < 0).toList();
-    final dueSoon = pending.where((t) => daysUntil(t.dueDate) >= 0 && daysUntil(t.dueDate) <= 3).toList()
+    final dueSoon = pending.where((t) => daysUntil(t.dueDate) >= 0 && daysUntil(t.dueDate) <= 14).toList()
       ..sort((a, b) => a.dueDate.compareTo(b.dueDate));
 
     final monthKey = todayIsoStr.substring(0, 7);
