@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:math';
+
+int _idCounter = 0;
 
 String genId() {
-  final rnd = Random();
-  final n = rnd.nextInt(1 << 32);
+  _idCounter++;
   final t = DateTime.now().microsecondsSinceEpoch;
-  return (t ^ n).toRadixString(36);
+  return '$t-$_idCounter';
 }
 
 String _pad2(int n) => n.toString().padLeft(2, '0');
@@ -16,7 +16,6 @@ String todayIso() => isoDate(DateTime.now());
 
 String shiftDateIso(int days) => isoDate(DateTime.now().add(Duration(days: days)));
 
-/// Days between today and [iso] (positive = future, negative = past).
 int daysUntil(String iso) {
   final today = DateTime.parse(todayIso());
   final target = DateTime.parse(iso);
@@ -66,7 +65,7 @@ class ClassItem {
   String end; // HH:mm
   String location;
   String color; // 'teal' | 'amber' | 'coral' | 'ink'
-  List<String> skipDates; // occurrence dates (yyyy-MM-dd) to hide, e.g. holidays
+  List<String> skipDates; // occurrence dates (yyyy-MM-dd) to hide
 
   ClassItem({
     required this.id,
